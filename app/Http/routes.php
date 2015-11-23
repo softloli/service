@@ -11,11 +11,14 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->welcome();
+$api = app('Dingo\Api\Routing\Router');
+
+$api->version('v1', function($api){
+    $api->get('user', ['as' => 'uesr.show', 'uses' => 'App\Api\V1\Controllers\UserController@show']);
 });
 
-$app->get('/test', function() {
-    echo url('foo');
-    return 'Hello World';
+$api->version('v2', function($api){
+    $api->get('collections', function(){
+        return 'v2';
+    });
 });
